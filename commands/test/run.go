@@ -16,16 +16,19 @@ package test
 
 import "fmt"
 
+// Test implements commands.Runner, and represents the type for 'test' command.
 type Test struct {
 	Args []string
 }
 
+// New returns new Test instance.
 func New(args []string) Test {
 	return Test{
 		Args: args,
 	}
 }
 
+// Run is the operation command to launch 'test' command.
 func (t Test) Run() {
 	fmt.Printf("[test] %v\n", t.Args) // DEBUG
 }

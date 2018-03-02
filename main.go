@@ -24,6 +24,8 @@ import (
 
 const SelfCommandName = "hako" // TODO: make this replacable on build time.
 
+// Command is the type to represent command name and its arguments.
+// Name is the actual command name to run.
 type Command struct {
 	Name string
 	Args []string

@@ -15,33 +15,31 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"path"
+	"reflect"
+	"testing"
 )
 
-const SelfCommandName = "hako" // TODO: make this replacable on build time.
-
-type Command struct {
-	Name    string
-	Options []string
-}
-
-func cmdAndOpts(args []string) Command {
-	cmdPath := args[0]
-	if path.Base(cmdPath) == SelfCommandName {
-		if len(os.Args) > 1 {
-			return Command{os.Args[1], os.Args[2:]}
+func cmdAndOpts_test(t *testing.T) {
+	ins := [][]string{
+		{"cat"},
+		{"cat", "-v"},
+		{"/bin/cat"},
+		{"/bin/cat", "-v"},
+		{"/usr/bin/hako", "cat"},
+		{"/usr/bin/hako", "cat", "-v"},
+	}
+	wants := []Command{
+		{"cat", []string{}},
+		{"cat", []string{"-v"}},
+		{"cat", []string{}},
+		{"cat", []string{"-v"}},
+		{"cat", []string{}},
+		{"cat", []string{"-v"}},
+	}
+	for i, in := range ins {
+		out := cmdAndOpts(in)
+		if !reflect.DeepEqual(out, wants[i]) {
+			t.Errorf("out: %v, want: %v", out, wants[i])
 		}
-		return Command{"", []string{}}
 	}
-	if len(os.Args) > 1 {
-		return Command{os.Args[0], os.Args[1:]}
-	}
-	return Command{os.Args[0], []string{}}
-}
-
-func main() {
-	command := cmdAndOpts(os.Args)
-	fmt.Println(command) // DEBUG
 }

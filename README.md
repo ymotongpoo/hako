@@ -6,8 +6,6 @@ though origial project's objective is there.
 
 ## Commands
 
-- [ ] [
-- [ ] [[
 - [ ] acpid
 - [ ] addgroup
 - [ ] adduser
@@ -273,7 +271,7 @@ though origial project's objective is there.
 - [ ] tee
 - [ ] telnet
 - [ ] telnetd
-- [ ] test
+- [ ] test, [, [[
 - [ ] tftp
 - [ ] tftpd
 - [ ] time

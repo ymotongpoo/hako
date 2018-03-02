@@ -15,16 +15,18 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path"
+
+	"github.com/ymotongpoo/hako/commands"
+	"github.com/ymotongpoo/hako/commands/test"
 )
 
 const SelfCommandName = "hako" // TODO: make this replacable on build time.
 
 type Command struct {
-	Name    string
-	Options []string
+	Name string
+	Args []string
 }
 
 func cmdAndOpts(args []string) Command {
@@ -41,7 +43,17 @@ func cmdAndOpts(args []string) Command {
 	return Command{os.Args[0], []string{}}
 }
 
+func router(c Command) commands.Runner {
+	switch c.Name {
+	case "test":
+		return test.New(c.Args)
+	default:
+		return nil
+	}
+}
+
 func main() {
 	command := cmdAndOpts(os.Args)
-	fmt.Println(command) // DEBUG
+	runner := router(command)
+	runner.Run() // DEBUG
 }

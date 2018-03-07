@@ -14,11 +14,17 @@
 
 package test
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+)
+
+const CommandName = "test"
 
 // Test implements commands.Runner, and represents the type for 'test' command.
 type Test struct {
-	Args []string
+	Args    []string
+	FlagSet *flag.FlagSet
 }
 
 // New returns new Test instance.
